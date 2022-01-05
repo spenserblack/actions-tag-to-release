@@ -33,6 +33,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-  steps:
-    - uses: spenserblack/actions-tag-to-release@master
+    steps:
+      - uses: spenserblack/actions-tag-to-release@master
 ```
