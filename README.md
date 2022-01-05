@@ -34,5 +34,8 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
       - uses: spenserblack/actions-tag-to-release@master
 ```
