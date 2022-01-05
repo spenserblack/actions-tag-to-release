@@ -1,0 +1,27 @@
+name: Tag to Release
+description: >-
+  Generate a GitHub release using an annotated tag for the release info
+inputs:
+  tag:
+    description: The tag to use to create the release. Defaults to github.ref.
+    required: true
+    default: ${{ github.ref }}
+  token:
+    description: Authorized secret GitHub token. Defaults to github.token.
+    required: true
+    default: ${{ github.token }}
+outputs:
+  title:
+    description: The title used to create the release
+    value: ${{ steps.title.outputs.title }}
+runs:
+  using: composite
+  steps:
+    - run: 'echo "::set-output name=title::$(git tag -l --format="%(contents:subject)" ${{ inputs.tag }})"'
+      shell: bash
+      id: title
+    - name: Create Release
+      run: 'gh release create ${{ inputs.tag }} -t "${{ steps.title.outputs.title }}" -n "$(git tag -l --format="%(contents:body)" ${{ inputs.tag }})"'
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
