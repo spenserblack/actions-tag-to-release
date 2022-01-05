@@ -5,6 +5,22 @@ notes
 
 ## Example
 
+### Tag
+
+```bash
+git tag -a v1.0.0 -m "Initial Release
+
+Added
+-----
+
+- Initial version of tool
+"
+
+git push origin v1.0.0
+```
+
+### Workflow Code
+
 ```yaml
 name: Release
 
