@@ -1,6 +1,9 @@
 name: Tag to Release
 description: >-
   Generate a GitHub release using an annotated tag for the release info
+branding:
+  icon: tag
+  color: green
 inputs:
   tag:
     description: The tag to use to create the release. Defaults to github.ref_name.
