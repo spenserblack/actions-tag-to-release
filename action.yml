@@ -18,13 +18,5 @@ outputs:
     description: The title used to create the release
     value: ${{ steps.title.outputs.title }}
 runs:
-  using: composite
-  steps:
-    - run: 'echo "::set-output name=title::$(git tag -l --format="%(contents:subject)" ${{ inputs.tag }})"'
-      shell: bash
-      id: title
-    - name: Create Release
-      run: 'gh release create ${{ inputs.tag }} -t "${{ steps.title.outputs.title }}" -n "$(git tag -l --format="%(contents:body)" ${{ inputs.tag }})"'
-      shell: bash
-      env:
-        GITHUB_TOKEN: ${{ inputs.token }}
+  using: node16
+  main: 'dist/index.js'
