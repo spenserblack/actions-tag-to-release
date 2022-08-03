@@ -1,7 +1,7 @@
 import {getInput, setOutput, debug} from '@actions/core'
 import {getOctokit} from '@actions/github'
 import Tag from './tag'
-import {tag as rawTag, token} from './config';
+import {parseDraft, tag as rawTag, token} from './config';
 
 async function run(): Promise<void> {
   debug(`Tag: ${rawTag}`)
@@ -14,6 +14,9 @@ async function run(): Promise<void> {
   debug(`Release Body: ${body}`)
   setOutput('body', body)
 
+  const draft = parseDraft()
+  debug(`Draft: ${draft}`)
+
   const [owner, repo] = process.env.GITHUB_REPOSITORY?.split('/') ?? ['', '']
   debug(`Owner: ${owner}`)
   debug(`Repo: ${repo}`)
@@ -25,7 +28,8 @@ async function run(): Promise<void> {
     repo,
     tag_name: rawTag,
     name,
-    body
+    body,
+    draft
   })
 }
 

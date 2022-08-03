@@ -13,6 +13,10 @@ inputs:
     description: Authorized secret GitHub token. Defaults to github.token.
     required: true
     default: ${{ github.token }}
+  draft:
+    description: If the release should be a draft
+    required: true
+    default: true
 outputs:
   title:
     description: The title used to create the release
