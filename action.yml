@@ -20,7 +20,8 @@ inputs:
 outputs:
   title:
     description: The title used to create the release
-    value: ${{ steps.title.outputs.title }}
+  body:
+    description: The release notes
 runs:
   using: node16
   main: 'dist/index.js'
