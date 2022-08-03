@@ -1,7 +1,7 @@
 import {getInput, setOutput, debug} from '@actions/core'
 import {getOctokit} from '@actions/github'
 import Tag from './tag'
-import {parseDraft, tag as rawTag, token} from './config';
+import {parseDraft, tag as rawTag, token} from './config'
 
 async function run(): Promise<void> {
   debug(`Tag: ${rawTag}`)
