@@ -1,13 +1,12 @@
 import {getInput, setOutput, debug} from '@actions/core'
 import {getOctokit} from '@actions/github'
 import Tag from './tag'
+import {tag as rawTag, token} from './config';
 
 async function run(): Promise<void> {
-  const rawTag: string = getInput('tag')
   debug(`Tag: ${rawTag}`)
 
   const tag = new Tag(rawTag)
-  const token: string = getInput('token')
 
   const [name, body] = await Promise.all([tag.getSubject(), tag.getBody()])
   debug(`Release Name: ${name}`)
