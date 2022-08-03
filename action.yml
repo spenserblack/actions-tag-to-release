@@ -17,6 +17,10 @@ inputs:
     description: If the release should be a draft
     required: true
     default: false
+  dry-run:
+    description: Set to true to prevent this action from creating a release
+    required: true
+    default: false
 outputs:
   title:
     description: The title used to create the release

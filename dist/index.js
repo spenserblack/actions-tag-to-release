@@ -7,10 +7,11 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseDraft = exports.token = exports.tag = void 0;
+exports.parseDraft = exports.dryRun = exports.token = exports.tag = void 0;
 const core_1 = __nccwpck_require__(2186);
 exports.tag = (0, core_1.getInput)('tag');
 exports.token = (0, core_1.getInput)('token');
+exports.dryRun = (0, core_1.getBooleanInput)('dry-run');
 function parseDraft() {
     const input = (0, core_1.getInput)('draft');
     switch (input) {
@@ -68,6 +69,10 @@ function run() {
         const [owner, repo] = (_b = (_a = process.env.GITHUB_REPOSITORY) === null || _a === void 0 ? void 0 : _a.split('/')) !== null && _b !== void 0 ? _b : ['', ''];
         (0, core_1.debug)(`Owner: ${owner}`);
         (0, core_1.debug)(`Repo: ${repo}`);
+        if (config_1.dryRun) {
+            (0, core_1.notice)('Dry run, skipping release creation', { title: 'Dry Run' });
+            return;
+        }
         // NOTE Docs: https://octokit.github.io/rest.js/v18#repos-create-release
         const octokit = (0, github_1.getOctokit)(config_1.token);
         yield octokit.rest.repos.createRelease({

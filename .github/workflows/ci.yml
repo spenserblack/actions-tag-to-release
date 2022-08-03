@@ -22,3 +22,18 @@ jobs:
     - name: Check Format
       run: npm run format-check
     - run: npm test
+
+    - name: Set up test tag
+      run: git tag -a foo -m "My Title" -m "My Notes"
+    - uses: ./
+      with:
+        dry-run: true
+      id: release-step
+    - name: Check title
+      if: steps.release-step.outputs.title != "My Title"
+      run: |
+        echo 'Expected "My Title" got "${{ steps.release-step.outputs.title }}"'
+    - name: Check notes
+      if: steps.release-step.outputs.body != "My Notes"
+      run: |
+        echo 'Expected "My Notes" got "${{ steps.release-step.outputs.body }}"'
