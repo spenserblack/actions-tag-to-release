@@ -45,11 +45,12 @@ jobs:
 
 ## Inputs
 
-|   key   |         default          |                                 description                                  |
-| :-----: | :----------------------: | :--------------------------------------------------------------------------: |
-|  `tag`  | `${{ github.ref_name }}` | The annotated tag for the release, containing the release's title and notes. |
-| `token` |  `${{ github.token }}`   |                The GitHub token to use to create the release.                |
-| `draft` |         `false`          |                Creates the release as a draft if set to true.                |
+|    key    |         default          |                                      description                                       |
+| :-------: | :----------------------: | :------------------------------------------------------------------------------------: |
+|   `tag`   | `${{ github.ref_name }}` |      The annotated tag for the release, containing the release's title and notes.      |
+|  `token`  |  `${{ github.token }}`   |                     The GitHub token to use to create the release.                     |
+|  `draft`  |         `false`          |                     Creates the release as a draft if set to true.                     |
+| `dry-run` |         `false`          | Use this to prevent a release from being created. Useful if you only need the outputs. |
 
 ## Outputs
 
