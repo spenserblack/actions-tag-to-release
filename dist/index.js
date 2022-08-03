@@ -7,11 +7,10 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseDraft = exports.dryRun = exports.token = exports.tag = void 0;
+exports.parseDryRun = exports.parseDraft = exports.token = exports.tag = void 0;
 const core_1 = __nccwpck_require__(2186);
 exports.tag = (0, core_1.getInput)('tag');
 exports.token = (0, core_1.getInput)('token');
-exports.dryRun = (0, core_1.getBooleanInput)('dry-run');
 function parseDraft() {
     const input = (0, core_1.getInput)('draft');
     switch (input) {
@@ -28,6 +27,10 @@ function parseDraft() {
     }
 }
 exports.parseDraft = parseDraft;
+function parseDryRun() {
+    return (0, core_1.getBooleanInput)('dry-run');
+}
+exports.parseDryRun = parseDryRun;
 
 
 /***/ }),
@@ -69,7 +72,7 @@ function run() {
         const [owner, repo] = (_b = (_a = process.env.GITHUB_REPOSITORY) === null || _a === void 0 ? void 0 : _a.split('/')) !== null && _b !== void 0 ? _b : ['', ''];
         (0, core_1.debug)(`Owner: ${owner}`);
         (0, core_1.debug)(`Repo: ${repo}`);
-        if (config_1.dryRun) {
+        if ((0, config_1.parseDryRun)()) {
             (0, core_1.notice)('Dry run, skipping release creation', { title: 'Dry Run' });
             return;
         }
