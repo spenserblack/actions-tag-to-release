@@ -119,7 +119,7 @@ class Tag {
         return __awaiter(this, void 0, void 0, function* () {
             let output = '';
             let error = '';
-            yield (0, exec_1.exec)('git', ['tag', '-l', `--format="%(contents:${contents})"`, this.tag], {
+            yield (0, exec_1.exec)('git', ['tag', '-l', `--format=%(contents:${contents})`, this.tag], {
                 listeners: {
                     stdout: (data) => {
                         output = data.toString();

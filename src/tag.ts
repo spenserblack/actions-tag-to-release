@@ -17,7 +17,7 @@ export default class Tag {
 
     await exec(
       'git',
-      ['tag', '-l', `--format="%(contents:${contents})"`, this.tag],
+      ['tag', '-l', `--format=%(contents:${contents})`, this.tag],
       {
         listeners: {
           stdout: (data: Buffer) => {
