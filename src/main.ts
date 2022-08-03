@@ -1,7 +1,7 @@
 import {setOutput, debug, notice} from '@actions/core'
 import {getOctokit} from '@actions/github'
 import Tag from './tag'
-import {dryRun, parseDraft, tag as rawTag, token} from './config'
+import {parseDraft, parseDryRun, tag as rawTag, token} from './config'
 
 async function run(): Promise<void> {
   debug(`Tag: ${rawTag}`)
@@ -21,7 +21,7 @@ async function run(): Promise<void> {
   debug(`Owner: ${owner}`)
   debug(`Repo: ${repo}`)
 
-  if (dryRun) {
+  if (parseDryRun()) {
     notice('Dry run, skipping release creation', {title: 'Dry Run'})
     return
   }

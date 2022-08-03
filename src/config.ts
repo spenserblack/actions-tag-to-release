@@ -2,7 +2,6 @@ import {getBooleanInput, getInput} from '@actions/core'
 
 export const tag: string = getInput('tag')
 export const token: string = getInput('token')
-export const dryRun: boolean = getBooleanInput('dry-run')
 
 export function parseDraft(): boolean {
   const input = getInput('draft')
@@ -18,4 +17,8 @@ export function parseDraft(): boolean {
     default:
       throw new Error(`Invalid draft value: ${input}`)
   }
+}
+
+export function parseDryRun(): boolean {
+  return getBooleanInput('dry-run')
 }
