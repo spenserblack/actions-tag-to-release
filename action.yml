@@ -16,7 +16,7 @@ inputs:
   draft:
     description: If the release should be a draft
     required: true
-    default: true
+    default: false
 outputs:
   title:
     description: The title used to create the release
