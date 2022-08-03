@@ -50,3 +50,10 @@ jobs:
 |  `tag`  | `${{ github.ref_name }}` | The annotated tag for the release, containing the release's title and notes. |
 | `token` |  `${{ github.token }}`   |                The GitHub token to use to create the release.                |
 | `draft` |         `false`          |                Creates the release as a draft if set to true.                |
+
+## Outputs
+
+|   key   |                                      description                                       |
+| :-----: | :------------------------------------------------------------------------------------: |
+| `title` |                     The first line of the annotated tag's message                      |
+| `body`  | All other lines after the second line (like a commit, the second line should be blank) |
