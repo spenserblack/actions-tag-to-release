@@ -1,5 +1,8 @@
 # Tag to Release
 
+[![Node.js CI](https://github.com/spenserblack/actions-tag-to-release/actions/workflows/ci.yml/badge.svg)](https://github.com/spenserblack/actions-tag-to-release/actions/workflows/ci.yml)
+[![Check dist/](https://github.com/spenserblack/actions-tag-to-release/actions/workflows/check-dist.yml/badge.svg)](https://github.com/spenserblack/actions-tag-to-release/actions/workflows/check-dist.yml)
+
 Generate a GitHub release using an annotated tag for the title and release
 notes
 
