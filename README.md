@@ -42,3 +42,11 @@ jobs:
           ref: ${{ github.ref }}
       - uses: spenserblack/actions-tag-to-release@master
 ```
+
+## Inputs
+
+| key | default | description |
+| :-: | :-----: | :---------: |
+| `tag` | `${{ github.ref_name }}` | The annotated tag for the release, containing the release's title and notes. |
+| `token` | `${{ github.token }}` | The GitHub token to use to create the release. |
+| `draft` | `false` | Creates the release as a draft if set to true. |
