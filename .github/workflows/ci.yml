@@ -24,7 +24,7 @@ jobs:
     - run: npm test
 
     - name: Set up test tag
-      run: git tag -a foo -m "My Title" -m "My Notes"
+      run: 'git tag -a foo -m "My Title" -m "My Notes"'
     - uses: ./
       with:
         dry-run: true
@@ -33,7 +33,9 @@ jobs:
       if: steps.release-step.outputs.title != "My Title"
       run: |
         echo 'Expected "My Title" got "${{ steps.release-step.outputs.title }}"'
+        exit 1
     - name: Check notes
       if: steps.release-step.outputs.body != "My Notes"
       run: |
         echo 'Expected "My Notes" got "${{ steps.release-step.outputs.body }}"'
+        exit 1
