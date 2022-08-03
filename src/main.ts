@@ -1,4 +1,4 @@
-import {getInput, setOutput, debug, notice} from '@actions/core'
+import {setOutput, debug, notice} from '@actions/core'
 import {getOctokit} from '@actions/github'
 import Tag from './tag'
 import {dryRun, parseDraft, tag as rawTag, token} from './config'
