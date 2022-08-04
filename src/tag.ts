@@ -34,6 +34,6 @@ export default class Tag {
       throw new Error(error)
     }
 
-    return output.replace(/\r?\n$/, '')
+    return output.replace(/(\r?\n)+$/, '')
   }
 }

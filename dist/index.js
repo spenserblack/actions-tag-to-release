@@ -140,7 +140,7 @@ class Tag {
             if (error) {
                 throw new Error(error);
             }
-            return output.replace(/\r?\n$/, '');
+            return output.replace(/(\r?\n)+$/, '');
         });
     }
 }
