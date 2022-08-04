@@ -115,7 +115,7 @@ class Tag {
     }
     getSubject() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getTagContents('subject');
+            return (yield this.getTagContents('subject')).replace(/\r?\n$/, '');
         });
     }
     getBody() {
