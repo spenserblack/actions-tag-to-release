@@ -37,6 +37,8 @@ jobs:
       with:
         tag: foo
         dry-run: true
+        prerelease: auto
+        prerelease-pattern: foo
       id: release-step
     - name: Check title
       if: steps.release-step.outputs.title != 'My Title'
@@ -47,4 +49,9 @@ jobs:
       if: steps.release-step.outputs.body != 'My Notes'
       run: |
         echo 'Expected "My Notes" got "${{ steps.release-step.outputs.body }}"'
+        exit 1
+    - name: Check prerelease
+      if: steps.release-step.outputs.prerelease != 'true'
+      run: |
+        echo 'Expected "true" got "${{ steps.release-step.outputs.prerelease }}"'
         exit 1

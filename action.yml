@@ -37,6 +37,8 @@ outputs:
     description: The title used to create the release
   body:
     description: The release notes
+  prerelease:
+    description: If the release is a prerelease
 runs:
   using: node16
   main: 'dist/index.js'

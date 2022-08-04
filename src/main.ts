@@ -1,7 +1,8 @@
 import {setOutput, debug, notice} from '@actions/core'
 import {getOctokit} from '@actions/github'
 import Tag from './tag'
-import {parseDraft, parseDryRun, tag as rawTag, token} from './config'
+import {parseDraft, parseDryRun, parsePrerelease, prereleasePattern, tag as rawTag, token} from './config'
+import isPrerelease from './is-prerelease'
 
 async function run(): Promise<void> {
   debug(`Tag: ${rawTag}`)
@@ -21,6 +22,14 @@ async function run(): Promise<void> {
   debug(`Owner: ${owner}`)
   debug(`Repo: ${repo}`)
 
+  const prerelease = isPrerelease(parsePrerelease(), rawTag, prereleasePattern)
+
+  if(prerelease) {
+    debug('Detected prerelease')
+  }
+
+  setOutput('prerelease', prerelease)
+
   if (parseDryRun()) {
     notice('Dry run, skipping release creation', {title: 'Dry Run'})
     return
@@ -34,6 +43,7 @@ async function run(): Promise<void> {
     tag_name: rawTag,
     name,
     body,
+    prerelease,
     draft
   })
 }
