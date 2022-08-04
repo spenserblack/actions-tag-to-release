@@ -46,16 +46,21 @@ jobs:
 
 ## Inputs
 
-|    key    |         default          |                                      description                                       |
-| :-------: | :----------------------: | :------------------------------------------------------------------------------------: |
-|   `tag`   | `${{ github.ref_name }}` |      The annotated tag for the release, containing the release's title and notes.      |
-|  `token`  |  `${{ github.token }}`   |                     The GitHub token to use to create the release.                     |
-|  `draft`  |         `false`          |                     Creates the release as a draft if set to true.                     |
-| `dry-run` |         `false`          | Use this to prevent a release from being created. Useful if you only need the outputs. |
+|         key          |         default          |              possible values               |                                                            description                                                             |
+| :------------------: | :----------------------: | :----------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
+|        `tag`         | `${{ github.ref_name }}` |                any tag name                |                            The annotated tag for the release, containing the release's title and notes.                            |
+|       `token`        |  `${{ github.token }}`   |              any valid token               |                                           The GitHub token to use to create the release.                                           |
+|       `draft`        |         `false`          |              `true`, `false`               |                                           Creates the release as a draft if set to true.                                           |
+|      `dry-run`       |         `false`          |              `true`, `false`               |                       Use this to prevent a release from being created. Useful if you only need the outputs.                       |
+|     `prerelease`     |         `false`          | `true`, `false`, `always`, `never`, `auto` | Set `true` to always create a prerelease. Set to `auto` to create a prerelease when the tag matches the prerelease pattern (below) |
+| `prerelease-pattern` |        `v*.*.*-*`        |          See [minimatch] patterns          |                                         Pattern to match to the tag to detect a prerelease                                         |
 
 ## Outputs
 
-|   key   |                                      description                                       |
-| :-----: | :------------------------------------------------------------------------------------: |
-| `title` |                     The first line of the annotated tag's message                      |
-| `body`  | All other lines after the second line (like a commit, the second line should be blank) |
+|     key      |                                      description                                       |
+| :----------: | :------------------------------------------------------------------------------------: |
+|   `title`    |                     The first line of the annotated tag's message                      |
+|    `body`    | All other lines after the second line (like a commit, the second line should be blank) |
+| `prerelease` |                          If the workflow created a prerelease                          |
+
+[minimatch]: https://www.npmjs.com/package/minimatch
