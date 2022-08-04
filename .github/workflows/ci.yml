@@ -21,7 +21,12 @@ jobs:
     - run: npm run build
     - name: Check Format
       run: npm run format-check
-    - run: npm test
+    - name: Test and generate coverage
+      run: npm test
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
 
     - name: Set up test tag
       run: |
