@@ -9,18 +9,27 @@ describe('isPrerelease', () => {
     ['v1.0.0', 'v*.*.*-*', false],
     ['v1-rc', 'v*.*.*-*', false],
     ['foo', 'v*.*.*-*', false],
-    ['foo-prerelease', '*-prerelease', true],
-  ];
+    ['foo-prerelease', '*-prerelease', true]
+  ]
 
-  test.each(options)('isPrerelease(true, %s, %s) is true', (tag: string, pattern: string) => {
-    expect(isPrerelease(true, tag, pattern)).toBe(true)
-  })
+  test.each(options)(
+    'isPrerelease(true, %s, %s) is true',
+    (tag: string, pattern: string) => {
+      expect(isPrerelease(true, tag, pattern)).toBe(true)
+    }
+  )
 
-  test.each(options)('isPrerelease(false, %s, %s) is false', (tag: string, pattern: string) => {
-    expect(isPrerelease(false, tag, pattern)).toBe(false)
-  })
+  test.each(options)(
+    'isPrerelease(false, %s, %s) is false',
+    (tag: string, pattern: string) => {
+      expect(isPrerelease(false, tag, pattern)).toBe(false)
+    }
+  )
 
-  test.each(options)('isPrerelease("auto", %s, %s) is %p', (tag: string, pattern: string, match: boolean) => {
-    expect(isPrerelease('auto', tag, pattern)).toBe(match)
-  })
-});
+  test.each(options)(
+    'isPrerelease("auto", %s, %s) is %p',
+    (tag: string, pattern: string, match: boolean) => {
+      expect(isPrerelease('auto', tag, pattern)).toBe(match)
+    }
+  )
+})

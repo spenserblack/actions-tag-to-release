@@ -20,15 +20,21 @@ describe('config', () => {
   })
 
   describe('parsePrerelease', () => {
-    test.each(['true', 'True', 'TRUE', 'always'])('%s should be true', input => {
-      process.env.INPUT_PRERELEASE = input
-      expect(parsePrerelease()).toBe(true)
-    })
+    test.each(['true', 'True', 'TRUE', 'always'])(
+      '%s should be true',
+      input => {
+        process.env.INPUT_PRERELEASE = input
+        expect(parsePrerelease()).toBe(true)
+      }
+    )
 
-    test.each(['false', 'False', 'FALSE', 'never'])('%s should be false', input => {
-      process.env.INPUT_PRERELEASE = input
-      expect(parsePrerelease()).toBe(false)
-    })
+    test.each(['false', 'False', 'FALSE', 'never'])(
+      '%s should be false',
+      input => {
+        process.env.INPUT_PRERELEASE = input
+        expect(parsePrerelease()).toBe(false)
+      }
+    )
 
     test('auto is auto', () => {
       process.env.INPUT_PRERELEASE = 'auto'

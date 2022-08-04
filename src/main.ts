@@ -1,7 +1,14 @@
 import {setOutput, debug, notice} from '@actions/core'
 import {getOctokit} from '@actions/github'
 import Tag from './tag'
-import {parseDraft, parseDryRun, parsePrerelease, prereleasePattern, tag as rawTag, token} from './config'
+import {
+  parseDraft,
+  parseDryRun,
+  parsePrerelease,
+  prereleasePattern,
+  tag as rawTag,
+  token
+} from './config'
 import isPrerelease from './is-prerelease'
 
 async function run(): Promise<void> {
@@ -24,7 +31,7 @@ async function run(): Promise<void> {
 
   const prerelease = isPrerelease(parsePrerelease(), rawTag, prereleasePattern)
 
-  if(prerelease) {
+  if (prerelease) {
     debug('Detected prerelease')
   }
 

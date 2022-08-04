@@ -1,6 +1,6 @@
 import {getBooleanInput, getInput} from '@actions/core'
 
-export type PrereleaseConfig = boolean | 'auto';
+export type PrereleaseConfig = boolean | 'auto'
 
 export const tag: string = getInput('tag')
 export const token: string = getInput('token')
