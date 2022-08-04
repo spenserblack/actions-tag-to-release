@@ -1,7 +1,7 @@
-import {getInput, setOutput, debug} from '@actions/core'
+import {setOutput, debug, notice} from '@actions/core'
 import {getOctokit} from '@actions/github'
 import Tag from './tag'
-import {parseDraft, tag as rawTag, token} from './config'
+import {parseDraft, parseDryRun, tag as rawTag, token} from './config'
 
 async function run(): Promise<void> {
   debug(`Tag: ${rawTag}`)
@@ -20,6 +20,11 @@ async function run(): Promise<void> {
   const [owner, repo] = process.env.GITHUB_REPOSITORY?.split('/') ?? ['', '']
   debug(`Owner: ${owner}`)
   debug(`Repo: ${repo}`)
+
+  if (parseDryRun()) {
+    notice('Dry run, skipping release creation', {title: 'Dry Run'})
+    return
+  }
 
   // NOTE Docs: https://octokit.github.io/rest.js/v18#repos-create-release
   const octokit = getOctokit(token)

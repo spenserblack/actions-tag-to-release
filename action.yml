@@ -16,7 +16,7 @@ inputs:
   draft:
     description: If the release should be a draft
     required: true
-    default: true
+    default: false
   prerelease:
     description: >
       If the release should be a prerelease.
@@ -28,10 +28,15 @@ inputs:
     description: The pattern to match to the tag to detect a prerelease
     required: false
     default: 'v*.*.*-*'
+  dry-run:
+    description: Set to true to prevent this action from creating a release
+    required: true
+    default: false
 outputs:
   title:
     description: The title used to create the release
-    value: ${{ steps.title.outputs.title }}
+  body:
+    description: The release notes
 runs:
   using: node16
   main: 'dist/index.js'
