@@ -17,6 +17,17 @@ inputs:
     description: If the release should be a draft
     required: true
     default: false
+  prerelease:
+    description: >
+      If the release should be a prerelease.
+      Set to auto to use the prerelease pattern.
+      Possible values: true|false|always|never|auto
+    required: true
+    default: false
+  prerelease-pattern:
+    description: The pattern to match to the tag to detect a prerelease
+    required: false
+    default: 'v*.*.*-*'
   dry-run:
     description: Set to true to prevent this action from creating a release
     required: true
@@ -26,6 +37,8 @@ outputs:
     description: The title used to create the release
   body:
     description: The release notes
+  prerelease:
+    description: If the release is a prerelease
 runs:
   using: node16
   main: 'dist/index.js'
