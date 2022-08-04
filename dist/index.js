@@ -115,7 +115,7 @@ class Tag {
     }
     getSubject() {
         return __awaiter(this, void 0, void 0, function* () {
-            return (yield this.getTagContents('subject')).replace(/\r?\n$/, '');
+            return yield this.getTagContents('subject');
         });
     }
     getBody() {
@@ -140,7 +140,7 @@ class Tag {
             if (error) {
                 throw new Error(error);
             }
-            return output;
+            return output.replace(/\r?\n$/, '');
         });
     }
 }

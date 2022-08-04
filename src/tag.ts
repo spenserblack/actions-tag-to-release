@@ -4,7 +4,7 @@ export default class Tag {
   constructor(public tag: string) {}
 
   async getSubject(): Promise<string> {
-    return (await this.getTagContents('subject')).replace(/\r?\n$/, '')
+    return await this.getTagContents('subject')
   }
 
   async getBody(): Promise<string> {
@@ -34,6 +34,6 @@ export default class Tag {
       throw new Error(error)
     }
 
-    return output
+    return output.replace(/\r?\n$/, '')
   }
 }
