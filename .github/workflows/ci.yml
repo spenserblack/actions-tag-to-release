@@ -16,13 +16,13 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
-        cache: npm
-    - run: npm ci
-    - run: npm run build
+        cache: yarn
+    - run: yarn install --frozen-lockfile
+    - run: yarn build
     - name: Check Format
-      run: npm run format-check
+      run: yarn format-check
     - name: Test and generate coverage
-      run: npm test
+      run: yarn test
     - name: Upload coverage report
       uses: codecov/codecov-action@v3
       with:
