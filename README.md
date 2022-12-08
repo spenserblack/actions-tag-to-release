@@ -7,6 +7,8 @@
 Generate a GitHub release using an annotated tag for the title and release
 notes
 
+Pairs well with [`release.sh`][release-sh].
+
 ## Example
 
 ### Tag
@@ -64,3 +66,4 @@ jobs:
 | `prerelease` |                          If the workflow created a prerelease                          |
 
 [minimatch]: https://www.npmjs.com/package/minimatch
+[release-sh]: https://github.com/spenserblack/release.sh
