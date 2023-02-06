@@ -33,7 +33,7 @@
   "devDependencies": {
     "@types/minimatch": "^5.1.2",
     "@types/node": "^18.11.9",
-    "@typescript-eslint/parser": "^5.49.0",
+    "@typescript-eslint/parser": "^5.50.0",
     "@vercel/ncc": "^0.36.1",
     "eslint": "^8.33.0",
     "eslint-plugin-github": "^4.6.0",
