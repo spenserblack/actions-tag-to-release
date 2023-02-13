@@ -28,7 +28,7 @@
     "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",
     "@actions/github": "^5.1.1",
-    "minimatch": "^6.1.6"
+    "minimatch": "^6.1.9"
   },
   "devDependencies": {
     "@types/minimatch": "^5.1.2",
