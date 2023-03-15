@@ -48,14 +48,14 @@ jobs:
 
 ## Inputs
 
-|         key          |         default          |              possible values               |                                                            description                                                             |
-| :------------------: | :----------------------: | :----------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
-|        `tag`         | `${{ github.ref_name }}` |                any tag name                |                            The annotated tag for the release, containing the release's title and notes.                            |
-|       `token`        |  `${{ github.token }}`   |              any valid token               |                                           The GitHub token to use to create the release.                                           |
-|       `draft`        |         `false`          |              `true`, `false`               |                                           Creates the release as a draft if set to true.                                           |
-|      `dry-run`       |         `false`          |              `true`, `false`               |                       Use this to prevent a release from being created. Useful if you only need the outputs.                       |
-|     `prerelease`     |         `false`          | `true`, `false`, `always`, `never`, `auto` | Set `true` to always create a prerelease. Set to `auto` to create a prerelease when the tag matches the prerelease pattern (below) |
-| `prerelease-pattern` |        `v*.*.*-*`        |          See [minimatch] patterns          |                                         Pattern to match to the tag to detect a prerelease                                         |
+|         key          |      default      |              possible values               |                                                            description                                                             |
+| :------------------: | :---------------: | :----------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
+|        `tag`         | `github.ref_name` |                any tag name                |                            The annotated tag for the release, containing the release's title and notes.                            |
+|       `token`        |  `github.token`   |              any valid token               |                                           The GitHub token to use to create the release.                                           |
+|       `draft`        |      `false`      |              `true`, `false`               |                                           Creates the release as a draft if set to true.                                           |
+|      `dry-run`       |      `false`      |              `true`, `false`               |                       Use this to prevent a release from being created. Useful if you only need the outputs.                       |
+|     `prerelease`     |      `false`      | `true`, `false`, `always`, `never`, `auto` | Set `true` to always create a prerelease. Set to `auto` to create a prerelease when the tag matches the prerelease pattern (below) |
+| `prerelease-pattern` |    `v*.*.*-*`     |          See [minimatch] patterns          |                                         Pattern to match to the tag to detect a prerelease                                         |
 
 ## Outputs
 
