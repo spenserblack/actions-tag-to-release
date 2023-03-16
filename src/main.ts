@@ -5,6 +5,7 @@ import {
   parseDraft,
   parseDryRun,
   parsePrerelease,
+  parseTagAsName,
   prereleasePattern,
   tag as rawTag,
   token
@@ -16,7 +17,11 @@ async function run(): Promise<void> {
 
   const tag = new Tag(rawTag)
 
-  const [name, body] = await Promise.all([tag.getSubject(), tag.getBody()])
+  const tagAsName = parseTagAsName()
+  debug(`Tag as name: ${tagAsName}`)
+
+  const name = tagAsName ? rawTag : await tag.getSubject()
+  const body = await tag.getBody(tagAsName)
   debug(`Release Name: ${name}`)
   setOutput('title', name)
   debug(`Release Body: ${body}`)

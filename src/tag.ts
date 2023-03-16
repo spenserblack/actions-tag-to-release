@@ -4,11 +4,11 @@ export default class Tag {
   constructor(public tag: string) {}
 
   async getSubject(): Promise<string> {
-    return await this.getTagContents('subject')
+    return await this.getTagContents('contents:subject')
   }
 
-  async getBody(): Promise<string> {
-    return await this.getTagContents('body')
+  async getBody(includeSubject: boolean): Promise<string> {
+    return await this.getTagContents(includeSubject ? 'contents' : 'contents:body')
   }
 
   private async getTagContents(contents: string): Promise<string> {
@@ -17,7 +17,7 @@ export default class Tag {
 
     await exec(
       'git',
-      ['tag', '-l', `--format=%(contents:${contents})`, this.tag],
+      ['tag', '-l', `--format=%(${contents})`, this.tag],
       {
         listeners: {
           stdout: (data: Buffer) => {
