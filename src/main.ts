@@ -20,8 +20,14 @@ async function run(): Promise<void> {
   const tagAsName = parseTagAsName()
   debug(`Tag as name: ${tagAsName}`)
 
-  const name = tagAsName ? rawTag : await tag.getSubject()
-  const body = await tag.getBody(tagAsName)
+  let name: string;
+  let body: string;
+  if (tagAsName) {
+    name = rawTag;
+    body = (await tag.getContents(['tag', 'body'])).join('\n');
+  } else {
+    [name, body] = await Promise.all([tag.getSubject(), tag.getBody()]);
+  }
   debug(`Release Name: ${name}`)
   setOutput('title', name)
   debug(`Release Body: ${body}`)
