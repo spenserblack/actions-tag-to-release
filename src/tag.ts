@@ -17,27 +17,25 @@ export default class Tag {
     if (typeof filter === 'string') {
       return await this.getTagContents(`contents:${filter}`)
     }
-    return await Promise.all(filter.map(async (f) => await this.getTagContents(`contents:${f}`)))
+    return await Promise.all(
+      filter.map(async f => await this.getTagContents(`contents:${f}`))
+    )
   }
 
   private async getTagContents(contents: string): Promise<string> {
     let output = ''
     let error = ''
 
-    await exec(
-      'git',
-      ['tag', '-l', `--format=%(${contents})`, this.tag],
-      {
-        listeners: {
-          stdout: (data: Buffer) => {
-            output = data.toString()
-          },
-          stderr: (data: Buffer) => {
-            error = data.toString()
-          }
+    await exec('git', ['tag', '-l', `--format=%(${contents})`, this.tag], {
+      listeners: {
+        stdout: (data: Buffer) => {
+          output = data.toString()
+        },
+        stderr: (data: Buffer) => {
+          error = data.toString()
         }
       }
-    )
+    })
 
     if (error) {
       throw new Error(error)
