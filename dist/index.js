@@ -7,7 +7,7 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseDryRun = exports.parsePrerelease = exports.parseDraft = exports.prereleasePattern = exports.token = exports.tag = void 0;
+exports.parseDryRun = exports.parsePrerelease = exports.parseTagAsName = exports.parseDraft = exports.prereleasePattern = exports.token = exports.tag = void 0;
 const core_1 = __nccwpck_require__(2186);
 exports.tag = (0, core_1.getInput)('tag');
 exports.token = (0, core_1.getInput)('token');
@@ -20,6 +20,14 @@ function parseDraft() {
     return val;
 }
 exports.parseDraft = parseDraft;
+function parseTagAsName() {
+    const input = (0, core_1.getInput)('tag-as-name');
+    const val = inputAsBoolean(input);
+    if (val === null)
+        throw new Error(`Invalid tag-as-name value: ${input}`);
+    return val;
+}
+exports.parseTagAsName = parseTagAsName;
 function parsePrerelease() {
     const input = (0, core_1.getInput)('prerelease');
     if (input === 'auto')
@@ -106,7 +114,18 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         (0, core_1.debug)(`Tag: ${config_1.tag}`);
         const tag = new tag_1.default(config_1.tag);
-        const [name, body] = yield Promise.all([tag.getSubject(), tag.getBody()]);
+        const tagAsName = (0, config_1.parseTagAsName)();
+        (0, core_1.debug)(`Tag as name: ${tagAsName}`);
+        let name;
+        let body;
+        if (tagAsName) {
+            name = config_1.tag;
+            body = (yield tag.getContents(['tag', 'body'])).join('\n');
+        }
+        else {
+            ;
+            [name, body] = yield Promise.all([tag.getSubject(), tag.getBody()]);
+        }
         (0, core_1.debug)(`Release Name: ${name}`);
         (0, core_1.setOutput)('title', name);
         (0, core_1.debug)(`Release Body: ${body}`);
@@ -165,19 +184,27 @@ class Tag {
     }
     getSubject() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getTagContents('subject');
+            return yield this.getContents('subject');
         });
     }
     getBody() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getTagContents('body');
+            return yield this.getContents('body');
+        });
+    }
+    getContents(filter) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof filter === 'string') {
+                return yield this.getTagContents(`contents:${filter}`);
+            }
+            return yield Promise.all(filter.map((f) => __awaiter(this, void 0, void 0, function* () { return yield this.getTagContents(`contents:${f}`); })));
         });
     }
     getTagContents(contents) {
         return __awaiter(this, void 0, void 0, function* () {
             let output = '';
             let error = '';
-            yield (0, exec_1.exec)('git', ['tag', '-l', `--format=%(contents:${contents})`, this.tag], {
+            yield (0, exec_1.exec)('git', ['tag', '-l', `--format=%(${contents})`, this.tag], {
                 listeners: {
                     stdout: (data) => {
                         output = data.toString();
