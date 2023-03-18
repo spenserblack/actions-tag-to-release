@@ -7,7 +7,7 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseDryRun = exports.parsePrerelease = exports.parseTagAsName = exports.parseDraft = exports.prereleasePattern = exports.token = exports.tag = void 0;
+exports.parseDryRun = exports.parsePrerelease = exports.parseTagAsTitle = exports.parseDraft = exports.prereleasePattern = exports.token = exports.tag = void 0;
 const core_1 = __nccwpck_require__(2186);
 exports.tag = (0, core_1.getInput)('tag');
 exports.token = (0, core_1.getInput)('token');
@@ -20,14 +20,14 @@ function parseDraft() {
     return val;
 }
 exports.parseDraft = parseDraft;
-function parseTagAsName() {
-    const input = (0, core_1.getInput)('tag-as-name');
+function parseTagAsTitle() {
+    const input = (0, core_1.getInput)('tag-as-title');
     const val = inputAsBoolean(input);
     if (val === null)
-        throw new Error(`Invalid tag-as-name value: ${input}`);
+        throw new Error(`Invalid tag-as-title value: ${input}`);
     return val;
 }
-exports.parseTagAsName = parseTagAsName;
+exports.parseTagAsTitle = parseTagAsTitle;
 function parsePrerelease() {
     const input = (0, core_1.getInput)('prerelease');
     if (input === 'auto')
@@ -114,20 +114,15 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         (0, core_1.debug)(`Tag: ${config_1.tag}`);
         const tag = new tag_1.default(config_1.tag);
-        const tagAsName = (0, config_1.parseTagAsName)();
-        (0, core_1.debug)(`Tag as name: ${tagAsName}`);
-        let name;
-        let body;
-        if (tagAsName) {
-            name = config_1.tag;
-            body = (yield tag.getContents(['tag', 'body'])).join('\n');
+        const tagAsTitle = (0, config_1.parseTagAsTitle)();
+        (0, core_1.debug)(`Tag as title: ${tagAsTitle}`);
+        let [title, body] = yield tag.getContents(['subject', 'body']);
+        if (tagAsTitle) {
+            body = [title, body].join('\n');
+            title = config_1.tag;
         }
-        else {
-            ;
-            [name, body] = yield Promise.all([tag.getSubject(), tag.getBody()]);
-        }
-        (0, core_1.debug)(`Release Name: ${name}`);
-        (0, core_1.setOutput)('title', name);
+        (0, core_1.debug)(`Release Title: ${title}`);
+        (0, core_1.setOutput)('title', title);
         (0, core_1.debug)(`Release Body: ${body}`);
         (0, core_1.setOutput)('body', body);
         const draft = (0, config_1.parseDraft)();
@@ -150,7 +145,7 @@ function run() {
             owner,
             repo,
             tag_name: config_1.tag,
-            name,
+            title,
             body,
             prerelease,
             draft
@@ -192,19 +187,14 @@ class Tag {
             return yield this.getContents('body');
         });
     }
-    getContents(filter) {
+    getContents(filter = '') {
         return __awaiter(this, void 0, void 0, function* () {
-            if (typeof filter === 'string') {
-                return yield this.getTagContents(`contents:${filter}`);
+            if (typeof filter !== 'string') {
+                return yield Promise.all(filter.map((f) => __awaiter(this, void 0, void 0, function* () { return yield this.getContents(f); })));
             }
-            return yield Promise.all(filter.map((f) => __awaiter(this, void 0, void 0, function* () { return yield this.getTagContents(`contents:${f}`); })));
-        });
-    }
-    getTagContents(contents) {
-        return __awaiter(this, void 0, void 0, function* () {
             let output = '';
             let error = '';
-            yield (0, exec_1.exec)('git', ['tag', '-l', `--format=%(${contents})`, this.tag], {
+            yield (0, exec_1.exec)('git', ['tag', '-l', `--format=%(contents:${filter})`, this.tag], {
                 listeners: {
                     stdout: (data) => {
                         output = data.toString();
