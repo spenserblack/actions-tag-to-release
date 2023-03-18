@@ -13,10 +13,10 @@ export function parseDraft(): boolean {
   return val
 }
 
-export function parseTagAsName(): boolean {
-  const input = getInput('tag-as-name')
+export function parseTagAsTitle(): boolean {
+  const input = getInput('tag-as-title')
   const val = inputAsBoolean(input)
-  if (val === null) throw new Error(`Invalid tag-as-name value: ${input}`)
+  if (val === null) throw new Error(`Invalid tag-as-title value: ${input}`)
   return val
 }
 
