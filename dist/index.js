@@ -145,7 +145,7 @@ function run() {
             owner,
             repo,
             tag_name: config_1.tag,
-            title,
+            name: title,
             body,
             prerelease,
             draft
