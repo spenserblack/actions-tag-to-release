@@ -56,7 +56,7 @@ async function run(): Promise<void> {
     owner,
     repo,
     tag_name: rawTag,
-    title,
+    name: title,
     body,
     prerelease,
     draft
