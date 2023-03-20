@@ -9,15 +9,18 @@ notes
 
 Pairs well with [`release.sh`][release-sh].
 
+You can use [`git tag --cleanup=verbatim`][cleanup-verbatim]
+to keep Markdown headers (`# header`) so they don't get
+trimmed from the message.
+
 ## Example
 
 ### Tag
 
 ```bash
-git tag -a v1.0.0 -m "Initial Release
+git tag -a v1.0.0 --cleanup=verbatim -m "Initial Release
 
-Added
------
+## Added
 
 - Initial version of tool
 "
@@ -66,5 +69,6 @@ jobs:
 |    `body`    | All other lines after the second line (like a commit, the second line should be blank) |
 | `prerelease` |                          If the workflow created a prerelease                          |
 
+[cleanup-verbatim]: https://git-scm.com/docs/git-tag#Documentation/git-tag.txt---cleanupltmodegt
 [minimatch]: https://www.npmjs.com/package/minimatch
 [release-sh]: https://github.com/spenserblack/release.sh
