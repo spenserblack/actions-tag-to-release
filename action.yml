@@ -17,6 +17,15 @@ inputs:
     description: If the release should be a draft
     required: true
     default: false
+  tag-as-title:
+    description: >
+      If the tag itself should be used as the release title.
+      If true, the entire tag message, including the subject line (first line)
+      is used as the text body of the release.
+      If false, the subject line of the tag message is used as the release title
+      and the rest of the tag message is used as the release text body.
+    required: true
+    default: false
   prerelease:
     description: >
       If the release should be a prerelease.
