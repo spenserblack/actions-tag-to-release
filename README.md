@@ -7,7 +7,7 @@
 Generate a GitHub release using an annotated tag for the title and release
 notes
 
-Pairs well with [`release.sh`][release-sh].
+Pairs well with [`release.sh`][release-sh] or [`gh release-tag`][gh-release-tag].
 
 You can use [`git tag --cleanup=verbatim`][cleanup-verbatim]
 to keep Markdown headers (`# header`) so they don't get
@@ -70,5 +70,6 @@ jobs:
 | `prerelease` |                          If the workflow created a prerelease                          |
 
 [cleanup-verbatim]: https://git-scm.com/docs/git-tag#Documentation/git-tag.txt---cleanupltmodegt
+[gh-release-tag]: https://github.com/spenserblack/gh-release-tag
 [minimatch]: https://www.npmjs.com/package/minimatch
 [release-sh]: https://github.com/spenserblack/release.sh
