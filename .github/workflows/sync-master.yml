@@ -1,0 +1,17 @@
+name: Sync master branch
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync master
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Sync
+        run: 'git push origin main:master'
