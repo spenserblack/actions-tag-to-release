@@ -32,7 +32,7 @@ inputs:
       Set to auto to use the prerelease pattern.
       Possible values: true|false|always|never|auto
     required: true
-    default: false
+    default: auto
   prerelease-pattern:
     description: The pattern to match to the tag to detect a prerelease
     required: false
