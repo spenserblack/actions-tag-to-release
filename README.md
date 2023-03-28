@@ -2,7 +2,7 @@
 
 [![Node.js CI](https://github.com/spenserblack/actions-tag-to-release/actions/workflows/ci.yml/badge.svg)](https://github.com/spenserblack/actions-tag-to-release/actions/workflows/ci.yml)
 [![Check dist/](https://github.com/spenserblack/actions-tag-to-release/actions/workflows/check-dist.yml/badge.svg)](https://github.com/spenserblack/actions-tag-to-release/actions/workflows/check-dist.yml)
-[![codecov](https://codecov.io/gh/spenserblack/actions-tag-to-release/branch/master/graph/badge.svg?token=abEvixe4s0)](https://codecov.io/gh/spenserblack/actions-tag-to-release)
+[![codecov](https://codecov.io/gh/spenserblack/actions-tag-to-release/branch/main/graph/badge.svg?token=abEvixe4s0)](https://codecov.io/gh/spenserblack/actions-tag-to-release)
 
 Generate a GitHub release using an annotated tag for the title and release
 notes
@@ -46,7 +46,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
-      - uses: spenserblack/actions-tag-to-release@master
+      - uses: spenserblack/actions-tag-to-release@main
 ```
 
 ## Inputs
