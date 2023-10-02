@@ -91,15 +91,6 @@ exports["default"] = isPrerelease;
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -109,47 +100,44 @@ const github_1 = __nccwpck_require__(5438);
 const tag_1 = __importDefault(__nccwpck_require__(2829));
 const config_1 = __nccwpck_require__(88);
 const is_prerelease_1 = __importDefault(__nccwpck_require__(6034));
-function run() {
-    var _a, _b;
-    return __awaiter(this, void 0, void 0, function* () {
-        (0, core_1.debug)(`Tag: ${config_1.tag}`);
-        const tag = new tag_1.default(config_1.tag);
-        const tagAsTitle = (0, config_1.parseTagAsTitle)();
-        (0, core_1.debug)(`Tag as title: ${tagAsTitle}`);
-        let [title, body] = yield tag.getContents(['subject', 'body']);
-        if (tagAsTitle) {
-            body = [title, body].join('\n');
-            title = config_1.tag;
-        }
-        (0, core_1.debug)(`Release Title: ${title}`);
-        (0, core_1.setOutput)('title', title);
-        (0, core_1.debug)(`Release Body: ${body}`);
-        (0, core_1.setOutput)('body', body);
-        const draft = (0, config_1.parseDraft)();
-        (0, core_1.debug)(`Draft: ${draft}`);
-        const [owner, repo] = (_b = (_a = process.env.GITHUB_REPOSITORY) === null || _a === void 0 ? void 0 : _a.split('/')) !== null && _b !== void 0 ? _b : ['', ''];
-        (0, core_1.debug)(`Owner: ${owner}`);
-        (0, core_1.debug)(`Repo: ${repo}`);
-        const prerelease = (0, is_prerelease_1.default)((0, config_1.parsePrerelease)(), config_1.tag, config_1.prereleasePattern);
-        if (prerelease) {
-            (0, core_1.debug)('Detected prerelease');
-        }
-        (0, core_1.setOutput)('prerelease', prerelease);
-        if ((0, config_1.parseDryRun)()) {
-            (0, core_1.notice)('Dry run, skipping release creation', { title: 'Dry Run' });
-            return;
-        }
-        // NOTE Docs: https://octokit.github.io/rest.js/v18#repos-create-release
-        const octokit = (0, github_1.getOctokit)(config_1.token);
-        yield octokit.rest.repos.createRelease({
-            owner,
-            repo,
-            tag_name: config_1.tag,
-            name: title,
-            body,
-            prerelease,
-            draft
-        });
+async function run() {
+    (0, core_1.debug)(`Tag: ${config_1.tag}`);
+    const tag = new tag_1.default(config_1.tag);
+    const tagAsTitle = (0, config_1.parseTagAsTitle)();
+    (0, core_1.debug)(`Tag as title: ${tagAsTitle}`);
+    let [title, body] = await tag.getContents(['subject', 'body']);
+    if (tagAsTitle) {
+        body = [title, body].join('\n');
+        title = config_1.tag;
+    }
+    (0, core_1.debug)(`Release Title: ${title}`);
+    (0, core_1.setOutput)('title', title);
+    (0, core_1.debug)(`Release Body: ${body}`);
+    (0, core_1.setOutput)('body', body);
+    const draft = (0, config_1.parseDraft)();
+    (0, core_1.debug)(`Draft: ${draft}`);
+    const [owner, repo] = process.env.GITHUB_REPOSITORY?.split('/') ?? ['', ''];
+    (0, core_1.debug)(`Owner: ${owner}`);
+    (0, core_1.debug)(`Repo: ${repo}`);
+    const prerelease = (0, is_prerelease_1.default)((0, config_1.parsePrerelease)(), config_1.tag, config_1.prereleasePattern);
+    if (prerelease) {
+        (0, core_1.debug)('Detected prerelease');
+    }
+    (0, core_1.setOutput)('prerelease', prerelease);
+    if ((0, config_1.parseDryRun)()) {
+        (0, core_1.notice)('Dry run, skipping release creation', { title: 'Dry Run' });
+        return;
+    }
+    // NOTE Docs: https://octokit.github.io/rest.js/v18#repos-create-release
+    const octokit = (0, github_1.getOctokit)(config_1.token);
+    await octokit.rest.repos.createRelease({
+        owner,
+        repo,
+        tag_name: config_1.tag,
+        name: title,
+        body,
+        prerelease,
+        draft
     });
 }
 run();
@@ -158,57 +146,43 @@ run();
 /***/ }),
 
 /***/ 2829:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const exec_1 = __nccwpck_require__(1514);
 class Tag {
+    tag;
     constructor(tag) {
         this.tag = tag;
     }
-    getSubject() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getContents('subject');
-        });
+    async getSubject() {
+        return await this.getContents('subject');
     }
-    getBody() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.getContents('body');
-        });
+    async getBody() {
+        return await this.getContents('body');
     }
-    getContents(filter = '') {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (typeof filter !== 'string') {
-                return yield Promise.all(filter.map((f) => __awaiter(this, void 0, void 0, function* () { return yield this.getContents(f); })));
-            }
-            let output = '';
-            let error = '';
-            yield (0, exec_1.exec)('git', ['tag', '-l', `--format=%(contents:${filter})`, this.tag], {
-                listeners: {
-                    stdout: (data) => {
-                        output = data.toString();
-                    },
-                    stderr: (data) => {
-                        error = data.toString();
-                    }
+    async getContents(filter = '') {
+        if (typeof filter !== 'string') {
+            return await Promise.all(filter.map(async (f) => await this.getContents(f)));
+        }
+        let output = '';
+        let error = '';
+        await (0, exec_1.exec)('git', ['tag', '-l', `--format=%(contents:${filter})`, this.tag], {
+            listeners: {
+                stdout: (data) => {
+                    output = data.toString();
+                },
+                stderr: (data) => {
+                    error = data.toString();
                 }
-            });
-            if (error) {
-                throw new Error(error);
             }
-            return output.replace(/(\r?\n)+$/, '');
         });
+        if (error) {
+            throw new Error(error);
+        }
+        return output.replace(/(\r?\n)+$/, '');
     }
 }
 exports["default"] = Tag;
