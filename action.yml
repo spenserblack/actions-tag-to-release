@@ -49,5 +49,5 @@ outputs:
   prerelease:
     description: If the release is a prerelease
 runs:
-  using: node16
+  using: node20
   main: 'dist/index.js'
